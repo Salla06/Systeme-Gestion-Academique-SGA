@@ -133,13 +133,15 @@ def render_students(_, search):
                 ])),
             ]))
 
-        return dbc.Table([
-            html.Thead(html.Tr([
-                html.Th("ID"), html.Th("Nom Complet"), html.Th("Email"),
-                html.Th("Naissance"), html.Th("Moyenne"), html.Th("Presence"), html.Th("Actions"),
-            ])),
-            html.Tbody(rows)
-        ], hover=True, borderless=True, responsive=True, className="mb-0")
+        return html.Div([
+            dbc.Table([
+                html.Thead(html.Tr([
+                    html.Th("ID"), html.Th("Nom Complet"), html.Th("Email"),
+                    html.Th("Naissance"), html.Th("Moyenne"), html.Th("Presence"), html.Th("Actions"),
+                ])),
+                html.Tbody(rows)
+            ], hover=True, borderless=True, responsive=True, className="mb-0")
+        ], className="table-responsive")
     finally:
         db.close()
 
