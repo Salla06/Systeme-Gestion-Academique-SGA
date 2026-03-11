@@ -2,6 +2,7 @@ import dash
 from dash import html, dcc, callback, Input, Output, State, ctx, no_update, ALL
 import dash_bootstrap_components as dbc
 from database import get_db
+from datetime import datetime
 from models import Student, Grade, Course, Session, Attendance
 from sqlalchemy import func
 import base64
@@ -190,7 +191,10 @@ def save_student(n, nom, prenom, email, dob, edit_id, trigger):
     # Validation email
     if email and not EMAIL_REGEX.match(email):
         return no_update, no_update, dbc.Alert("Format email invalide.", color="warning", dismissable=True, duration=4000)
-    
+    # Conversion de la date si necessaire
+    if dob and isinstance(dob, str):
+        dob = datetime.strptime(dob, '%Y-%m-%d').date()
+        
     db = get_db()
     try:
         if edit_id:
